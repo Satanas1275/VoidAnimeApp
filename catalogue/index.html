@@ -250,20 +250,20 @@
     function parseAndDisplay(html) {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
-      const catalogDiv = doc.querySelector("#list_catalog");
-
       const target = document.getElementById("catalogue");
       target.innerHTML = "";
 
-      if (!catalogDiv) {
+      const links = Array.from(doc.querySelectorAll(".catalog-card > a, #list_catalog a"));
+
+      if (links.length === 0) {
         target.innerHTML = "Aucun résultat.";
         return;
       }
 
-      catalogDiv.querySelectorAll("a").forEach(a => {
-        const title = a.querySelector("h1")?.innerText || "Inconnu";
+      links.forEach(a => {
+        const title = a.querySelector(".card-title, h2, h1")?.innerText.trim() || "Inconnu";
         const img = a.querySelector("img")?.src || "";
-        const lang = a.querySelector("p:last-of-type")?.innerText.trim() || "VF";
+        const lang = getAnimeLanguage(a);
         const safeName = formatAnimeName(title);
 
         const item = document.createElement("a");
@@ -278,6 +278,23 @@
 
         target.appendChild(item);
       });
+    }
+
+    function getAnimeLanguage(card) {
+      const infoRows = card.querySelectorAll(".info-row");
+      for (const row of infoRows) {
+        const label = row.querySelector(".info-label")?.innerText.trim().toLowerCase();
+        if (label === "langues") {
+          const value = row.querySelector(".info-value")?.innerText.trim();
+          if (!value) return "VF";
+          return value.split(",")[0].trim();
+        }
+      }
+
+      // Fallback ancien format.
+      const legacyLang = card.querySelector("p:last-of-type")?.innerText.trim();
+      if (!legacyLang) return "VF";
+      return legacyLang.split(",")[0].trim();
     }
 
     // Initialisation
