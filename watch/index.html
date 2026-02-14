@@ -127,7 +127,7 @@
     }
 
     async function fetchEpisodesScript(title, lang, type) {
-      const url = `https://corsproxy.io/?https://anime-sama.fr/catalogue/${title}/${type}/${lang}/episodes.js`;
+      const url = `https://corsproxy.io/?https://anime-sama.tv/catalogue/${title}/${type}/${lang}/episodes.js`;
       try {
         const res = await fetch(url);
         if (!res.ok) return null;
