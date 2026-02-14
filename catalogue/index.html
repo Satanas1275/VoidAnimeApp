@@ -213,7 +213,7 @@
       document.getElementById("catalogue").innerHTML = "Chargement…";
       createPagination(page);
 
-      const url = `https://corsproxy.io/?https://anime-sama.fr/catalogue/?type[]=Anime&search=&page=${page}`;
+      const url = `https://corsproxy.io/?https://anime-sama.tv/catalogue/?type[]=Anime&search=&page=${page}`;
 
       try {
         const res = await fetch(url);
@@ -236,7 +236,7 @@
       document.getElementById("catalogue").innerHTML = "Recherche…";
       clearPagination();
 
-      const url = `https://corsproxy.io/?https://anime-sama.fr/catalogue/?type[]=Anime&search=${encodeURIComponent(query)}`;
+      const url = `https://corsproxy.io/?https://anime-sama.tv/catalogue/?type[]=Anime&search=${encodeURIComponent(query)}`;
 
       try {
         const res = await fetch(url);
